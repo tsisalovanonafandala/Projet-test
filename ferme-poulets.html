@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mon élevage</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--rp:999px;--rc:20px;--ri:14px;--bw:1px;--bw2:2px;--bc:var(--line);--sh:none;--ff:'Bricolage Grotesque',system-ui,sans-serif;--fh:var(--ff);--mono:var(--ff);--a:#2E6B3F;--a2:#7CC58D;--bg:#FFFFFF;--fill:#F4F6F3;--sf:#fff;--ink:#1C2320;--mute:#5D6A63;--line:#E6E9E5;--on:#fff;--accent:var(--a);--pad:16px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root[data-accent="vanille"]{--a:#8A5F00;--a2:#E8B948}
+:root[data-accent="lagon"]{--a:#17708A;--a2:#6CC3DC}
+:root[data-accent="bougainvillee"]{--a:#A3316B;--a2:#E58DB8}
+:root[data-density="compact"]{--pad:11px}
+:root[data-size="s"]{font-size:14px}
+:root[data-size="l"]{font-size:18px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101512;--fill:#101512;--sf:#182019;--ink:#E9EFEA;--mute:#9AA79F;--line:#2A342E;--on:#0F1411;--accent:var(--a2)}}
+:root[data-theme="dark"]{--bg:#101512;--fill:#101512;--sf:#182019;--ink:#E9EFEA;--mute:#9AA79F;--line:#2A342E;--on:#0F1411;--accent:var(--a2)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--ff);font-size:1rem;line-height:1.45}
+main{max-width:480px;margin:0 auto;padding:22px var(--pad) 100px}
+.view{display:none}.view.on{display:block}
+h1{font-size:1.9rem;line-height:1.1;letter-spacing:-.02em;font-weight:800;margin:0 0 1.1rem}
+h2{font-size:1.1rem;font-weight:700;margin:1.6rem 0 .7rem}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.hero{background:var(--accent);color:var(--on);border-radius:var(--rc);padding:calc(var(--pad)*1.4)}
+.hero .big{font-size:1.6rem;font-weight:800;line-height:1.1}
+.hero p{margin:.4rem 0 1.1rem;max-width:30ch;opacity:.92}
+.btn{font:inherit;font-weight:600;border:0;border-radius:var(--rp);padding:.7rem 1.3rem;background:var(--on);color:var(--accent)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{background:var(--sf);border:var(--bw) solid var(--bc);border-radius:var(--rc);padding:var(--pad)}
+.tile .e{font-size:1.9rem;display:block}
+.tile b{display:block;margin-top:.2rem}
+.tile small,.row small,.set small{color:var(--mute)}
+.tile .n{font-size:1.6rem;font-weight:800;margin:.3rem 0 .1rem}
+.row{display:flex;align-items:center;gap:12px;background:var(--sf);border:var(--bw) solid var(--bc);border-radius:var(--ri);padding:var(--pad);margin-bottom:8px}
+.row .e{font-size:1.7rem}
+.row .t{flex:1;min-width:0}
+.row .t b{display:block}
+.step{display:flex;align-items:center;gap:8px}
+.step button{width:36px;height:36px;border-radius:var(--rp);border:var(--bw) solid var(--bc);background:var(--fill);color:var(--ink);font:inherit;font-size:1.15rem}
+.step output{min-width:2ch;text-align:center;font-weight:800}
+.in{font:inherit;width:100%;padding:.65rem .8rem;border-radius:var(--ri);border:var(--bw) solid var(--bc);background:var(--fill);color:var(--ink)}
+.sm{width:5.6rem;text-align:right}
+.set{background:var(--sf);border:var(--bw) solid var(--bc);border-radius:var(--rc);padding:var(--pad);margin-bottom:12px}
+.set .lb{display:block;font-weight:600;margin-bottom:.55rem}
+.set small{display:block;margin-top:.45rem}
+.seg{display:flex;background:var(--fill);border:var(--bw) solid var(--bc);border-radius:var(--rp);padding:3px;gap:2px}
+.seg button{flex:1;font:inherit;font-size:.9rem;border:0;background:none;color:var(--mute);padding:.5rem .3rem;border-radius:var(--rp)}
+.seg button.on{background:var(--accent);color:var(--on);font-weight:600}
+.sw{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sw button{border:var(--bw2) solid var(--bc);background:var(--fill);border-radius:var(--ri);padding:.6rem .2rem;font:inherit;font-size:.78rem;color:var(--ink)}
+.sw button.on{border-color:var(--accent);font-weight:600}
+.sw i{display:block;width:28px;height:28px;border-radius:var(--rp);margin:0 auto .35rem}
+.line{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.line .lb{margin:0}
+.tg{appearance:none;-webkit-appearance:none;width:48px;height:28px;border-radius:var(--rp);background:var(--line);position:relative;margin:0;flex:none}
+.tg::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:var(--rp);background:var(--sf);transition:transform .15s}
+.tg:checked{background:var(--accent)}
+.tg:checked::after{transform:translateX(20px);background:var(--on)}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--sf);border-top:var(--bw) solid var(--bc);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav div{display:flex;max-width:480px;margin:0 auto}
+nav button{flex:1;font:inherit;border:0;background:none;color:var(--mute);padding:.55rem 0 .6rem}
+nav button span{display:block;font-size:1.3rem;line-height:1.2}
+nav button em{font-style:normal;font-size:.72rem}
+nav button.on{color:var(--accent);font-weight:700}
+.sub{color:var(--mute);margin:.5rem 0 1rem}.fld{margin-bottom:1rem}
+.go{width:100%;background:var(--accent);color:var(--on);border:0;border-radius:var(--rp);font:inherit;font-weight:700;padding:.85rem;margin-top:.4rem}
+.warn{background:var(--fill);border-radius:var(--ri);padding:.6rem .8rem;font-size:.9rem;margin-top:12px}
+.res{background:var(--sf);border:var(--bw) solid var(--bc);border-left:6px solid var(--accent);border-radius:var(--rc);padding:var(--pad);margin-top:14px}
+.rh{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:.6rem}.rh b{font-size:1.25rem}.rh small{color:var(--mute)}
+.chip{background:var(--fill);border:var(--bw) solid var(--bc);border-radius:var(--rp);padding:.2rem .7rem;font-size:.85rem;white-space:nowrap}
+.kv div{padding:.15rem 0}
+.ing{margin-top:.8rem;background:var(--fill);border-radius:var(--ri);padding:.6rem .8rem}
+.ing div{display:flex;justify-content:space-between;gap:10px;padding:.45rem 0;border-bottom:1px dashed var(--line)}.ing div:last-child{border:0}.ing .tot{font-weight:800}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.stats div{background:var(--fill);border-radius:var(--ri);padding:.7rem}.stats b{display:block;font-size:1.05rem;color:var(--accent)}.stats small{color:var(--mute)}
+.ig{display:flex;gap:8px;align-items:center;margin-bottom:8px}.ig .in:first-child{flex:1;min-width:0}
+.ig button{width:36px;height:36px;border-radius:var(--rp);border:var(--bw) solid var(--bc);background:var(--fill);color:var(--ink);flex:none}
+.add{width:100%;font:inherit;font-weight:600;border:1px dashed var(--line);background:none;color:var(--accent);border-radius:var(--ri);padding:.65rem}
+.ghost{font:inherit;font-weight:600;border:var(--bw2) solid var(--bc);background:none;color:var(--ink);border-radius:var(--rp);padding:.7rem}
+.det{margin-top:.8rem}.det summary{color:var(--mute);cursor:pointer;margin-bottom:.4rem}
+.opts{display:grid;gap:8px}
+.opt{display:block;text-align:left;font:inherit;color:var(--ink);background:var(--bg);border:var(--bw2) solid var(--bc);border-radius:var(--ri);padding:.75rem .9rem}
+.opt b{display:block}.opt small{color:var(--mute);margin-top:.15rem}
+.opt.on{border-color:var(--accent);background:var(--fill)}
+
+.hero,.res,.go{box-shadow:var(--sh)}
+h1,h2,.hero .big,.rh b{font-family:var(--fh)}
+.in[type=number],.ing div span:last-child,.stats b,.tile .n{font-family:var(--mono)}
+:root[data-style="brut"]{--rp:0;--rc:0;--ri:0;--bw:2px;--bw2:2px;--bc:var(--ink);--sh:5px 5px 0 var(--ink);--ff:'Space Grotesk',system-ui,sans-serif;--mono:'Space Mono',ui-monospace,monospace;--accent:var(--a);--on:#111}
+:root[data-style="brut"][data-accent="riziere"]{--a:#8BE28B}
+:root[data-style="brut"][data-accent="vanille"]{--a:#FFC61A}
+:root[data-style="brut"][data-accent="lagon"]{--a:#5AC8FA}
+:root[data-style="brut"][data-accent="bougainvillee"]{--a:#FF8FC0}
+:root[data-style="brut"] .lb{text-transform:uppercase;letter-spacing:.06em;font-size:.78rem}
+:root[data-style="brut"] .go:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+:root[data-style="journal"]{--rp:4px;--rc:4px;--ri:3px;--bw2:1px;--fh:'Fraunces',Georgia,serif}
+:root[data-style="journal"] h1{font-weight:600;letter-spacing:-.01em}
+:root[data-style="journal"] .hero{background:transparent;color:var(--ink);border-top:3px double var(--ink);border-bottom:1px solid var(--ink);border-radius:0;padding-left:0;padding-right:0}
+:root[data-style="journal"] .hero .btn{background:var(--accent);color:var(--on)}
+:root[data-style="bulle"]{--rp:999px;--rc:30px;--ri:22px;--bw:0px;--sh:0 8px 20px rgba(40,60,50,.12);--ff:'Nunito',system-ui,sans-serif}
+:root[data-style="bulle"] body{background:color-mix(in srgb,var(--accent) 9%,var(--bg));font-weight:600}
+:root[data-style="bulle"] .set,:root[data-style="bulle"] .res{box-shadow:var(--sh)}
+:root[data-style="bulle"] .in{background:var(--fill)}
+
+body.lock{overflow:hidden}
+#res.open{position:fixed;inset:0;z-index:100;background:var(--bg);overflow-y:auto;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 24px)}
+#res.open .res{max-width:480px;margin:0 auto;border:0;border-radius:0;box-shadow:none;background:none;padding:var(--pad) var(--pad) 32px}
+.bar{position:sticky;top:0;z-index:1;background:var(--bg);padding:calc(env(safe-area-inset-top,0px) + 10px) var(--pad) 10px;border-bottom:var(--bw) solid var(--bc)}
+.backbtn{font:inherit;font-size:1.05rem;font-weight:700;background:none;border:0;color:var(--accent);padding:.4rem 0}
+#err:empty{display:none}
+.ing div span:last-child{white-space:nowrap;flex:none;text-align:right}
+.ig{flex-wrap:wrap;margin-bottom:14px}
+.ig .in:first-child{flex:1 1 100%}
+.ig .sm{margin-left:0}
+.ig select.in{width:5rem;flex:none}
+.ig .pc{flex:1;text-align:right;color:var(--mute);white-space:nowrap;font-size:.9rem}
+.ig{padding-bottom:12px;border-bottom:1px dashed var(--line)}
+.pr{flex:1 1 100%;display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--mute)}
+.pr .in{width:7.5rem}.pr em{font-style:normal}
+</style>
+</head>
+<body>
+<main>
+  <section class="view" id="v-home">
+    <h1 class="fn">Ma ferme</h1>
+    <div class="hero">
+      <div class="big">Ration du jour</div>
+      <p>Calculez la nourriture de vos poulets selon leur âge.</p>
+      <button class="btn" data-tab="calc">Calculer une ration</button>
+    </div>
+    <div id="today"></div>
+  </section>
+  <section class="view" id="v-calc">
+    <div class="line"><h1 data-i="title" style="margin:0">Ration des poulets</h1>
+      <div class="seg"><button data-key="lang" data-v="mg">Malagasy</button><button data-key="lang" data-v="fr">Français</button></div></div>
+    <p class="sub" data-i="sub"></p>
+    <div class="set">
+      <div class="fld"><span class="lb" data-i="q"></span><div class="opts">
+        <button class="opt" data-key="mode" data-v="ready"><b data-i="mr"></b><small data-i="mrs"></small></button>
+        <button class="opt" data-key="mode" data-v="raw"><b data-i="mm"></b><small data-i="mms"></small></button></div></div>
+      <div class="fld"><label class="lb" for="c-age" data-i="age"></label><input class="in" id="c-age" type="number" inputmode="numeric" min="1" max="14" data-f="c:age"><small id="h-age"></small></div>
+      <div class="fld"><label class="lb" for="c-n" data-i="n"></label><input class="in" id="c-n" type="number" inputmode="numeric" min="1" data-f="c:n"></div>
+      <div class="fld"><label class="lb" for="c-days" data-i="days"></label><input class="in" id="c-days" type="number" inputmode="numeric" min="1" data-f="c:days"></div>
+      <button class="go" data-go="1" data-i="go"></button>
+      <div class="warn" id="err"></div>
+    </div>
+    <div id="res"></div>
+  </section>
+  <section class="view" id="v-formula">
+    <div class="line"><h1 data-i="n_formula" style="margin:0">Formule</h1>
+      <div class="seg"><button data-key="lang" data-v="mg">Malagasy</button><button data-key="lang" data-v="fr">Français</button></div></div>
+    <p class="sub" data-i="fsub"></p>
+    <div class="set">
+      <span class="lb" data-i="noRec"></span>
+      <div class="opts">
+        <button class="opt" type="button" data-preset="balanced"><b data-i="presetBal"></b><small data-i="presetBalSub"></small></button>
+        <button class="opt" type="button" data-preset="eco"><b data-i="presetEco"></b><small data-i="presetEcoSub"></small></button>
+      </div>
+      <div class="warn" data-i="presetNote"></div>
+      <div class="warn" id="presetConfirmBox" hidden>
+        <p id="presetConfirmText" style="margin:0 0 .6rem"></p>
+        <div style="display:flex;gap:8px">
+          <button class="go" type="button" id="presetYesBtn" data-pconfirm="yes" style="margin:0;flex:1"></button>
+          <button class="ghost" type="button" id="presetNoBtn" data-pconfirm="no" style="flex:1"></button>
+        </div>
+      </div>
+    </div>
+    <div class="set"><div id="ings"></div><button class="add" data-add="1" data-i="add"></button><small id="ftot"></small></div>
+    <div class="set"><label class="lb" for="batch" data-i="batch"></label><input class="in" id="batch" type="number" step="any" min="0" inputmode="decimal" data-f="batch"><small data-i="batchh"></small>
+      <div class="ing" id="batch-res"></div></div>
+    <div class="set"><label class="lb" for="wf" data-i="wf"></label><input class="in" id="wf" type="number" step="0.1" min="0" data-f="wf"><small data-i="wfh"></small></div>
+    <div class="set"><span class="lb" data-i="pr_t"></span>
+      <div class="fld"><label class="lb" for="pd" data-i="pd"></label><input class="in" id="pd" type="number" step="any" min="0" inputmode="decimal" data-f="pd"></div>
+      <div class="fld"><label class="lb" for="sd" data-i="sd"></label><input class="in" id="sd" type="number" step="any" min="0" inputmode="decimal" data-f="sd"></div>
+      <div class="fld"><label class="lb" for="cur" data-i="cur"></label><input class="in" id="cur" maxlength="6" data-f="cur"></div>
+      <small data-i="prh"></small></div>
+  </section>
+  <section class="view" id="v-settings">
+    <h1 data-i="n_settings">Préférences</h1>
+    <div class="set"><label class="lb" for="farm">Nom de la ferme</label><input class="in" id="farm" data-f="farm" maxlength="30"></div>
+    <div class="set"><span class="lb">Personnalité</span><div class="opts">
+      <button class="opt" data-key="style" data-v="classique"><b>Classique</b><small>Doux, arrondi, vert rizière</small></button>
+      <button class="opt" data-key="style" data-v="brut"><b>Brut</b><small>Carré, contours épais, couleurs vives</small></button>
+      <button class="opt" data-key="style" data-v="journal"><b>Journal</b><small>Sobre, comme une page de carnet</small></button>
+      <button class="opt" data-key="style" data-v="bulle"><b>Bulle</b><small>Très rond et joyeux</small></button></div></div>
+    <div class="set"><span class="lb">Couleur</span>
+      <div class="sw" data-key="accent">
+        <button data-key="accent" data-v="riziere"><i style="background:#2E6B3F"></i>Rizière</button>
+        <button data-key="accent" data-v="vanille"><i style="background:#E8B948"></i>Vanille</button>
+        <button data-key="accent" data-v="lagon"><i style="background:#17708A"></i>Lagon</button>
+        <button data-key="accent" data-v="bougainvillee"><i style="background:#A3316B"></i>Bougainvillée</button>
+      </div></div>
+    <div class="set"><span class="lb">Apparence</span>
+      <div class="seg"><button data-key="theme" data-v="light">Clair</button><button data-key="theme" data-v="dark">Sombre</button><button data-key="theme" data-v="auto">Auto</button></div></div>
+    <div class="set"><span class="lb">Taille du texte</span>
+      <div class="seg"><button data-key="size" data-v="s">Petit</button><button data-key="size" data-v="m">Normal</button><button data-key="size" data-v="l">Grand</button></div></div>
+    <div class="set"><span class="lb">Densité</span>
+      <div class="seg"><button data-key="density" data-v="roomy">Aérée</button><button data-key="density" data-v="compact">Compacte</button></div></div>
+    <div class="set"><span class="lb">Unité de poids</span>
+      <div class="seg"><button data-key="unit" data-v="kg">kg</button><button data-key="unit" data-v="g">g</button><button data-key="unit" data-v="lb">lb</button></div></div>
+    <div class="set"><label class="lb" for="lang">Langue</label>
+      <select class="in" id="lang" data-f="lang"><option value="fr">Français</option><option value="mg">Malagasy</option></select>
+      <small>Traduit : navigation et calcul de ration.</small></div>
+    <div class="set"><div class="line"><label class="lb" for="rem" data-i="remLbl">Rappel des repas</label><input type="checkbox" class="tg" id="rem" data-f="remind"></div>
+      <small data-i="remSub">Heure du premier repas</small><input class="in" type="time" id="time" data-f="time" style="margin-top:.4rem">
+      <small id="remStatus" style="display:block;margin-top:.5rem"></small></div>
+  </section>
+</main>
+<nav><div>
+  <button data-tab="home"><span>🏡</span><em data-i="n_home">Accueil</em></button>
+  <button data-tab="calc"><span>🧮</span><em data-i="n_calc">Calcul</em></button>
+  <button data-tab="formula"><span>🧪</span><em data-i="n_formula">Formule</em></button>
+  <button data-tab="settings"><span>⚙️</span><em data-i="n_settings">Préférences</em></button>
+</div></nav>
+<script>
+const STG=[[1,3,15],[4,7,22],[8,11,40],[12,14,55]];
+const T={fr:{n_home:"Accueil",n_calc:"Calcul",n_formula:"Formule",n_settings:"Préférences",title:"Ration des poulets",sub:"🐔 Nourriture et eau, avec la formule du mélange",age:"Jour d'âge des poulets (1 à 14)",n:"Nombre de poulets",days:"Nourriture pour combien de jours",go:"Calculer nourriture et eau",err:"Vérifiez les valeurs : jour d'âge de 1 à 14 (le tableau s'arrête à J14), nombre et durée d'au moins 1.",dd:"jours",st:"Poussin",rn:"Nombre de poulets",rd:"Durée",fo:d=>`Pour ${d} jours`,tot:"Total",pig:"Nourriture par poulet",all:n=>`Nourriture pour ${n} poulets`,wpig:"Eau par poulet",wall:n=>`Eau pour ${n} poulets`,wtot:d=>`Eau pour ${d} jours`,chip:a=>`Jour ${a}`,today:a=>`Aujourd'hui (J${a})`,miss:k=>`Le tableau s'arrête à J14 : ${k} jour(s) non calculé(s).`,back:"Retour",pr_t:"Prix et stock",sd:"Stock de démarrage (kg)",stkl:"En stock",stk:"Stock",last:"Le stock tient",upto14:"jusqu'à J14 au moins",rebuy:"À racheter avant",first:"À racheter en premier",left:"reste",short:"manque",nostk:"Stock non saisi pour certains ingrédients : ils ne sont pas pris en compte.",pd:"Prix du démarrage (par kg)",cur:"Devise",prh:"Le prix et le stock de chaque matière première se saisissent sur sa ligne, dans la formule ci-dessus.",pkg:"Prix par kg",cost:d=>`Coût de la ration (${d} jours)`,cpk:"Coût par kg",cpig:"Coût par poulet et par jour",call:n=>`Coût pour ${n} poulets par jour`,nopr:"Prix manquant pour certains ingrédients : le coût est partiel.",det:"Détail par tranche d'âge",q:"Que possédez-vous ?",mr:"J'ai du démarrage",mrs:"Aliment démarrage déjà prêt : je vois combien de kg les poulets mangent",mm:"J'ai des matières premières",mms:"Je prépare le mélange moi-même avec la formule",starter:"Démarrage à donner",fsub:"Indiquez la quantité de chaque ingrédient, en g ou en kg. Les pourcentages se calculent tout seuls. Utilisée si vous avez des matières premières.",add:"+ Ajouter un ingrédient",fwarn:"doit faire 100 %",wf:"Eau (litres par kg de nourriture)",wfh:"Estimation de départ, à ajuster selon la chaleur.",batch:"Je veux préparer (kg)",batchh:"Indiquez la quantité totale que vous voulez mélanger : l'app calcule la part de chaque ingrédient.",batchTitle:k=>`Quantités pour ${w(k*1000)}`,batchEmpty:"Indiquez une quantité pour voir la répartition.",remLbl:"Rappel des repas",remSub:"Heure du premier repas",remAsk:"Autorisez les notifications pour recevoir le rappel.",remOn:h=>`Rappel actif à ${h}. Gardez l'app ouverte ou en arrière-plan récent pour le recevoir.`,remOff:"Notifications refusées : activez-les dans les réglages du téléphone pour ce site, puis réessayez.",remNo:"Les notifications ne sont pas prises en charge ici. Elles fonctionneront une fois l'app empaquetée en APK.",remApk:"Pour un rappel fiable même app fermée, il faudra le plugin Notifications locales de Capacitor une fois en APK.",remMsg:"🐔 C'est l'heure de nourrir vos poulets !",noRec:"Pas encore de recette ?",presetBal:"Formule équilibrée",presetBalSub:"Avec farine de poisson : bon équilibre protéique, coût plus élevé",presetEco:"Formule économique",presetEcoSub:"Sans farine de poisson : ingrédients plus locaux et moins chers",presetNote:"Ce sont des points de départ à ajuster selon ce que vous trouvez localement et l'avis d'un technicien d'élevage. Charger une formule remplace celle en cours.",presetConfirm:"Remplacer la formule actuelle par cette recette de départ ?",presetYes:"Oui, remplacer",presetNo:"Annuler"},
+mg:{n_home:"Fiandohana",n_calc:"Kajy",n_formula:"Fangaro",n_settings:"Safidy",title:"Sakafon'ny akoho",sub:"🐔 Sakafo sy rano, miaraka amin'ny fangaro",age:"Andro faha… ny akoho (1 hatramin'ny 14)",n:"Isan'ny akoho",days:"Sakafo firy andro",go:"Kajin'ny filan-tsakafo sy rano",err:"Jereo ny sanda: andro 1-14 (mifarana amin'ny J14), isa sy fotoana ≥ 1.",dd:"andro",st:"Zanakoho",rn:"Isan'ny akoho",rd:"Vatsy",fo:d=>`Ho an'ny ${d} andro`,tot:"Total",pig:"Sakafo isaky ny akoho",wpig:"Rano isaky ny akoho",all:n=>`Fitambarany ho an'ny akoho ${n}`,wall:n=>`Rano ho an'ny akoho ${n}`,wtot:d=>`Rano ho an'ny ${d} andro`,chip:a=>`Andro ${a}`,today:a=>`Anio (J${a})`,miss:k=>`Mifarana amin'ny J14 ny tabilao: andro ${k} tsy voakajy.`,back:"Miverina",pr_t:"Vidiny sy tahiry",sd:"Tahirin'ny démarrage (kg)",stkl:"Tahiry",stk:"Tahiry",last:"Maharitra",upto14:"hatramin'ny J14 farafahakeliny",rebuy:"Vidio indray alohan'ny",first:"Vidio aloha",left:"sisa",short:"tsy ampy",nostk:"Tsy voasoratra ny tahiry ny akora sasany: tsy tafiditra amin'ny kajy.",pd:"Vidin'ny démarrage (isaky ny kg)",cur:"Vola",prh:"Ampidiro amin'ny andalana tsirairay ny vidiny sy ny tahiry, ao amin'ny fangaro etsy ambony.",pkg:"Vidin'ny kg",cost:d=>`Sarany ho an'ny ${d} andro`,cpk:"Sarany isaky ny kg",cpig:"Sarany isaky ny akoho isan'andro",call:n=>`Sarany ho an'ny akoho ${n} isan'andro`,nopr:"Tsy misy vidiny ny akora sasany: tsy feno ny sarany.",det:"Antsipiriany isaky ny andro",q:"Inona no ananao ?",mr:"Manana démarrage aho",mrs:"Sakafo efa vonona : hijery ny kg lanin'ny akoho",mm:"Manana matière première aho",mms:"Izaho no manao ny fangaro araka ny fangaro",starter:"Démarrage ilaina",fsub:"Ampidiro ny habetsaky ny akora tsirairay, amin'ny g na kg. Voakajy ho azy ny isan-jato. Ampiasaina rehefa manana matière première.",add:"+ Hanampy akora",fwarn:"tokony ho 100 %",wf:"Rano (litatra isaky ny kg sakafo)",wfh:"Vinavina fanombohana, ovay araka ny hafanana.",batch:"Te hamboatra (kg)",batchh:"Ampidiro ny fitambaran'ny sakafo tianao hovangiana : ny app no mikajy ny anjaran'ny akora tsirairay.",batchTitle:k=>`Habetsaky ho an'ny ${w(k*1000)}`,batchEmpty:"Ampidiro habetsaka mba hahitana ny fizarazarana.",remLbl:"Fampahatsiahivana sakafo",remSub:"Ora ny sakafo voalohany",remAsk:"Alefaso ny fahazoan-dàlana amin'ny fampandrenesana mba hahazoana ny fampahatsiahivana.",remOn:h=>`Mavitrika ny fampahatsiahivana amin'ny ${h}. Avelao hisokatra na vao haingana ny app mba hahazoana azy.`,remOff:"Nolavina ny fampandrenesana : alefaso ao amin'ny paramètre-n'ny finday ho an'ity tranonkala ity, dia andramo indray.",remNo:"Tsy raisin'ity toerana ity ny fampandrenesana. Hiasa izy rehefa voavondrona ho APK ny app.",remApk:"Mba hahazoana fampahatsiahivana azo antoka na dia mikatona aza ny app, ilaina ny plugin Notifications locales an'ny Capacitor rehefa APK.",remMsg:"🐔 Tonga ny ora hamahanana ny akoho !",noRec:"Mbola tsy manana fangaro ?",presetBal:"Fangaro feno",presetBalSub:"Misy farine de poisson : protéine tsara, saromody kokoa",presetEco:"Fangaro tsy lany vola be",presetEcoSub:"Tsy misy farine de poisson : akora eo an-toerana sy mora kokoa",presetNote:"Fanombohana ihany ireto, ovay araka izay hita eo an-toerana sy ny torohevitry ny teknisiana. Ny fakàna fangaro dia manolo ilay efa nisy.",presetConfirm:"Soloina amin'ity fangaro fanombohana ity ve ny fangaro ankehitriny ?",presetYes:"Eny, soloy",presetNo:"Aoka"}};
+const D={farm:"Ma ferme",accent:"riziere",theme:"light",style:"classique",size:"m",density:"roomy",unit:"kg",lang:"fr",remind:false,time:"06:30",count:{},w:{},stock:{},mode:"ready",calc:{age:1,n:10,days:14},wf:2,pd:"",sd:"",cur:"Ar",batch:20,formula:[{n:"Maïs concassé",q:5.2,u:"kg"},{n:"Tourteau de soja",q:2.8,u:"kg"},{n:"Farine de poisson",q:800,u:"g"},{n:"Son de riz",q:800,u:"g"},{n:"Coquillages broyés (calcium)",q:300,u:"g"},{n:"Sel",q:50,u:"g"},{n:"Prémix vitamines",q:50,u:"g"}]};
+const PRESETS={
+  balanced:[{n:"Maïs concassé",q:5.2,u:"kg"},{n:"Tourteau de soja",q:2.8,u:"kg"},{n:"Farine de poisson",q:800,u:"g"},{n:"Son de riz",q:800,u:"g"},{n:"Coquillages broyés (calcium)",q:300,u:"g"},{n:"Sel",q:50,u:"g"},{n:"Prémix vitamines",q:50,u:"g"}],
+  eco:[{n:"Maïs concassé",q:5.5,u:"kg"},{n:"Son de riz",q:2000,u:"g"},{n:"Tourteau de soja",q:2100,u:"g"},{n:"Coquillages broyés (calcium)",q:300,u:"g"},{n:"Sel",q:50,u:"g"},{n:"Prémix vitamines",q:50,u:"g"}]
+};
+let S;try{S=Object.assign({},D,JSON.parse(localStorage.getItem("fp")||"{}"))}catch(e){S=Object.assign({},D)}
+let V="home";
+const $=s=>document.querySelector(s);
+const save=()=>{try{localStorage.setItem("fp",JSON.stringify(S))}catch(e){}};
+function apply(){S.formula=S.formula.map(x=>x.q!==undefined?x:(v=>v>=1000?{n:x.n,q:v/1000,u:"kg"}:{n:x.n,q:v,u:"g"})((+x.p||0)*100));if(!["classique","brut","journal","bulle"].includes(S.style))S.style="classique";document.documentElement.dataset.style=S.style;if(!["riziere","vanille","lagon","bougainvillee"].includes(S.accent))S.accent="riziere";if(!T[S.lang])S.lang="fr";const r=document.documentElement;r.dataset.accent=S.accent;r.dataset.size=S.size;r.dataset.density=S.density;
+  if(S.theme==="auto")r.removeAttribute("data-theme");else r.dataset.theme=S.theme}
+function render(){
+  document.querySelectorAll(".fn").forEach(x=>x.textContent=S.farm||"Ma ferme");
+  document.querySelectorAll("[data-i]").forEach(x=>{const v=T[S.lang][x.dataset.i];if(typeof v==="string")x.textContent=v});
+  $("#c-age").value=S.calc.age;$("#c-n").value=S.calc.n;$("#c-days").value=S.calc.days;
+  $("#h-age").textContent=STG.map(x=>"J"+x[0]+"–J"+x[1]+" : "+w(x[2])).join(" | ");
+  ings();$("#wf").value=S.wf;$("#pd").value=S.pd;$("#sd").value=S.sd;$("#cur").value=S.cur;$("#batch").value=S.batch;today();if(shown)calc();
+  document.querySelectorAll("[data-key]").forEach(b=>{if(b.dataset.v)b.classList.toggle("on",S[b.dataset.key]===b.dataset.v);if(b.classList.contains("opt"))b.setAttribute("aria-pressed",S[b.dataset.key]===b.dataset.v)});
+  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id==="v-"+V));
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===V));
+  $("#farm").value=S.farm;$("#lang").value=S.lang;$("#rem").checked=S.remind;$("#time").value=S.time;remStatus();renderPresetBox();
+}
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  if(b.dataset.tab){V=b.dataset.tab;window.scrollTo(0,0)}
+  else if(b.dataset.key&&b.dataset.v){S[b.dataset.key]=b.dataset.v;if(b.dataset.key==="mode"&&b.dataset.v==="raw"){V="formula";window.scrollTo(0,0)}}
+  else if(b.dataset.go){shown=true}
+  else if(b.dataset.close){shown=false;closeRes()}
+  else if(b.dataset.add){S.formula.push({n:"",q:0,u:"g"})}
+  else if(b.dataset.del){S.formula.splice(Number(b.dataset.del),1)}
+  else if(b.dataset.step){const p=b.dataset.step.split(":");S.count[p[0]]=Math.max(0,(S.count[p[0]]||0)+Number(p[1]))}
+  else if(b.dataset.preset){askPreset(b.dataset.preset);return}
+  else if(b.dataset.pconfirm==="yes"){applyPreset();return}
+  else if(b.dataset.pconfirm==="no"){cancelPreset();return}
+  else return;
+  save();apply();render()});
+document.addEventListener("input",e=>{const f=e.target.dataset.f;if(!f)return;const p=f.split(":");
+  if(p[0]==="fn")S.formula[p[1]].n=e.target.value;else if(p[0]==="fs")S.formula[p[1]].s=e.target.value;else if(p[0]==="fpr")S.formula[p[1]].r=e.target.value;else if(p[0]==="fq")S.formula[p[1]].q=e.target.value;else if(p[0]==="fu")S.formula[p[1]].u=e.target.value;else if(p[0]==="wf")S.wf=e.target.value;else if(p[0]==="c")S.calc[p[1]]=e.target.value;else if(p[0]==="w")S.w[p[1]]=e.target.value;else if(p[0]==="s")S.stock[p[1]]=e.target.value;
+  else if(p[0]==="remind"){S.remind=e.target.checked;if(S.remind)askNotif()}else S[p[0]]=e.target.value;
+  if(p[0]==="farm")document.querySelectorAll(".fn").forEach(x=>x.textContent=S.farm||"Ma ferme");
+  save();if(p[0]==="lang")render();else if(p[0]==="fq"||p[0]==="fu"||p[0]==="wf"){ftot();pcs();batchRes();if(shown)calc()}else if(p[0]==="cur"){ings();if(shown)calc()}else if(p[0]==="batch")batchRes();else if(p[0]==="time"||p[0]==="remind")remStatus();
+  else if((p[0]==="fn"||p[0]==="fpr"||p[0]==="pd"||p[0]==="fs"||p[0]==="sd")&&shown)calc()});
+let shown=false;function closeRes(){const e=$("#res");e.innerHTML="";e.classList.remove("open");document.body.classList.remove("lock")}const f2=x=>String(+x.toFixed(2));
+const w=g=>S.unit==="lb"?f2(g/453.592)+" lb":(S.unit==="kg"&&g>=1000)?f2(g/1000)+" kg":f2(g)+" g";
+const rate=j=>STG.find(x=>j>=x[0]&&j<=x[1])[2];
+function info(){const c=S.calc,a=Math.floor(+c.age),n=Math.floor(+c.n),d=Math.floor(+c.days);return{a,n,d,ok:String(c.age)!==""&&a>=1&&a<=14&&n>=1&&d>=1}}
+const esc=v=>String(v).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+const gr=x=>(+x.q||0)*(x.u==="kg"?1000:1),sumG=()=>S.formula.reduce((a,x)=>a+gr(x),0),pc=x=>{const t=sumG();return t?gr(x)/t*100:0};
+function lasts(stk,share,a,n){let c=0,N=0;for(let j=a;j<=14;j++){const g=rate(j)*n*share;if(c+g>stk+1e-9)return{N,end:false};c+=g;N++}return{N,end:true}}
+const money=v=>{const n=v<100?+v.toFixed(1):Math.round(v);return n.toLocaleString("fr-FR")+" "+(S.cur||"Ar")};
+const wat=g=>{const l=g/1000*(+S.wf||0);return l<1?f2(l*1000)+" mL":f2(l)+" L"};
+function ftot(){const t=T[S.lang];$("#ftot").textContent=`${t.tot} : ${w(sumG())}`}
+let pendingPreset=null;
+function askPreset(key){if(!PRESETS[key])return;pendingPreset=key;renderPresetBox()}
+function renderPresetBox(){const t=T[S.lang],box=$("#presetConfirmBox");if(!box)return;
+  if(!pendingPreset){box.hidden=true;return}
+  $("#presetConfirmText").textContent=t.presetConfirm;
+  $("#presetYesBtn").textContent=t.presetYes;
+  $("#presetNoBtn").textContent=t.presetNo;
+  box.hidden=false}
+function applyPreset(){if(!pendingPreset||!PRESETS[pendingPreset]){cancelPreset();return}
+  S.formula=PRESETS[pendingPreset].map(x=>({...x}));
+  pendingPreset=null;save();ings();renderPresetBox()}
+function cancelPreset(){pendingPreset=null;renderPresetBox()}
+function remStatus(){const t=T[S.lang],el=$("#remStatus");if(!el)return;
+  if(!S.remind){el.textContent="";return}
+  if(!("Notification" in window)){el.textContent=t.remNo;return}
+  if(Notification.permission==="granted")el.textContent=t.remOn(S.time)+" "+t.remApk;
+  else if(Notification.permission==="denied")el.textContent=t.remOff;
+  else el.textContent=t.remAsk}
+function askNotif(){if(!("Notification" in window)){remStatus();return}
+  if(Notification.permission==="default")Notification.requestPermission().then(remStatus);else remStatus()}
+function checkRemind(){if(!S.remind||!("Notification" in window)||Notification.permission!=="granted")return;
+  const now=new Date(),hhmm=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0"),today=now.toDateString();
+  if(hhmm===S.time&&S._remFired!==today){
+    try{new Notification(S.farm||"Ma ferme",{body:T[S.lang].remMsg,icon:"data:,"})}catch(e){}
+    S._remFired=today;save()}}
+setInterval(checkRemind,20000);
+function batchRes(){const t=T[S.lang],el=$("#batch-res"),k=+S.batch||0,items=S.formula.filter(x=>x.n&&gr(x)>0);
+  if(!(k>0)||!items.length){el.innerHTML=`<div><span>${t.batchEmpty}</span></div>`;return}
+  const rows=items.map(x=>`<div><span>${esc(x.n)}<br><small>${f2(pc(x))} %</small></span><span>${w(k*1000*pc(x)/100)}</span></div>`).join("");
+  el.innerHTML=`<b>${t.batchTitle(k)}</b>${rows}`}
+function pcs(){document.querySelectorAll("[data-pc]").forEach(x=>{x.textContent=f2(pc(S.formula[+x.dataset.pc]))+" %"});document.querySelectorAll("[data-su]").forEach(x=>{x.textContent=S.formula[+x.dataset.su].u})}
+function ings(){$("#ings").innerHTML=S.formula.map((x,i)=>`<div class="ig"><input class="in" aria-label="Ingrédient" data-f="fn:${i}" value="${esc(x.n)}"><input class="in sm" type="number" step="any" min="0" inputmode="decimal" aria-label="Quantité" data-f="fq:${i}" value="${x.q}"><select class="in" aria-label="Unité" data-f="fu:${i}"><option value="g"${x.u==="g"?" selected":""}>g</option><option value="kg"${x.u==="kg"?" selected":""}>kg</option></select><span class="pc" data-pc="${i}">${f2(pc(x))} %</span><button data-del="${i}" aria-label="Supprimer">✕</button><label class="pr"><span>${T[S.lang].pkg}</span><input class="in" type="number" step="any" min="0" inputmode="decimal" data-f="fpr:${i}" value="${esc(x.r||"")}"><em>${esc(S.cur||"Ar")}</em></label><label class="pr"><span>${T[S.lang].stkl}</span><input class="in" type="number" step="any" min="0" inputmode="decimal" data-f="fs:${i}" value="${esc(x.s||"")}"><em data-su="${i}">${x.u}</em></label></div>`).join("");ftot();batchRes()}
+function today(){const t=T[S.lang],i=info();$("#today").innerHTML=i.ok?`<h2>🐔 ${t.today(i.a)}</h2><div class="stats" style="margin-top:0"><div><small>${t.pig}</small><b>${w(rate(i.a))}</b></div><div><small>${t.all(i.n)}</small><b>${w(rate(i.a)*i.n)}</b></div></div>`:""}
+function calc(){const t=T[S.lang],i=info(),el=$("#res"),er=$("#err");
+  if(!i.ok){er.textContent=t.err;shown=false;closeRes();return}
+  er.textContent="";
+  const a=i.a,n=i.n,d=i.d,end=Math.min(a+d-1,14),miss=a+d-1-end,sg=STG.find(x=>a>=x[0]&&a<=x[1]);let tot=0;
+  const det=STG.map(x=>{const lo=Math.max(a,x[0]),hi=Math.min(end,x[1]),k=hi-lo+1;if(k<1)return"";const g=k*x[2]*n;tot+=g;return `<div><span>J${lo}–J${hi} · ${k} ${t.dd} × ${w(x[2])}</span><span>${w(g)}</span></div>`}).join("");
+  let cpk=0,nop=0;if(S.mode==="raw"){S.formula.filter(x=>gr(x)>0).forEach(x=>{if(+x.r>0)cpk+=pc(x)/100*x.r;else nop++})}else cpk=+S.pd||0;
+  const hasC=cpk>0,cost=cpk*tot/1000;
+  const ing=S.formula.filter(x=>gr(x)>0).map(x=>{const c=+x.r>0?tot*pc(x)/100/1000*x.r:0;return `<div><span>🌾 ${esc(x.n||"—")}${c?`<br><small>${money(c)}</small>`:""}</span><span>${w(tot*pc(x)/100)} (${f2(pc(x))} %)</span></div>`}).join("");
+  const bad=hasC&&nop>0?`<div class="warn">${t.nopr}</div>`:"";
+
+  let stk="";
+  if(S.mode==="ready"){const g0=(+S.sd||0)*1000;if(g0>0){const L=lasts(g0,1,a,n),df=g0-tot;
+    stk=`<div class="ing"><b>${t.stk}: ${w(g0)}</b><div><span>${t.last}</span><span>${L.end?t.upto14:L.N+" "+t.dd}</span></div>${L.end?"":`<div><span>${t.rebuy}</span><span>J${a+L.N}</span></div>`}<div><span>${df>=0?t.left:t.short}</span><span>${w(Math.abs(df))}</span></div></div>`}}
+  else{const used=S.formula.filter(x=>gr(x)>0),rs=used.filter(x=>+x.s>0);
+    if(rs.length){let nm=99,all=true,fst="";
+      const ln=rs.map(x=>{const sg=(+x.s)*(x.u==="kg"?1000:1),sh=pc(x)/100,L=lasts(sg,sh,a,n),df=sg-tot*sh;if(!L.end){all=false;if(L.N<nm){nm=L.N;fst=x.n||"—"}}
+        return `<div><span>${esc(x.n||"—")}<br><small>${df>=0?t.left:t.short} ${w(Math.abs(df))}</small></span><span>${w(sg)}</span></div>`}).join("");
+      stk=`<div class="ing"><b>${t.stk}</b><div><span>${t.last}</span><span>${all?t.upto14:nm+" "+t.dd}</span></div>${all?"":`<div><span>${t.rebuy}</span><span>J${a+nm}</span></div><div><span>${t.first}</span><span>${esc(fst)}</span></div>`}${ln}</div>`+(rs.length<used.length?`<div class="warn">${t.nostk}</div>`:"")}}
+  el.innerHTML=`<div class="bar"><button class="backbtn" data-close="1">← ${t.back}</button></div><div class="res"><div class="rh"><div><b>🐥 ${t.st}</b><br><small>(J${sg[0]}–J${sg[1]})</small></div><span class="chip">${t.chip(a)}</span></div>
+  <div class="kv"><div>🐔 ${t.rn}: <b>${n}</b></div><div>🗓️ ${t.rd}: <b>${d} ${t.dd}</b></div></div>
+  <div class="ing"><b>${t.fo(d)}</b>${S.mode==="raw"?ing:""}<div class="tot"><span>${S.mode==="raw"?"🔁 "+t.tot:"🥣 "+t.starter} (${d} ${t.dd})</span><span>${w(tot)}</span></div><div><span>💧 ${t.wtot(d)}</span><span>${wat(tot)}</span></div>${hasC?`<div><span>${t.cost(d)}</span><span>${money(cost)}</span></div><div><span>${t.cpk}</span><span>${money(cpk)}</span></div>`:""}</div>
+  ${stk}${bad}${miss>0?`<div class="warn">${t.miss(miss)}</div>`:""}
+  <details class="det"><summary>${t.det}</summary><div class="ing">${det}</div></details>
+  <div class="stats"><div><small>${t.pig}</small><b>${w(rate(a))}</b></div><div><small>${t.all(n)}</small><b>${w(rate(a)*n)}</b></div>
+  <div><small>${t.wpig}</small><b>${wat(rate(a))}</b></div><div><small>${t.wall(n)}</small><b>${wat(rate(a)*n)}</b></div>${hasC?`<div><small>${t.cpig}</small><b>${money(cpk*rate(a)/1000)}</b></div><div><small>${t.call(n)}</small><b>${money(cpk*rate(a)*n/1000)}</b></div>`:""}</div></div>`;el.classList.add("open");document.body.classList.add("lock")}
+apply();render();
+</script>
+</body>
+</html>
